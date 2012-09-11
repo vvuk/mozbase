@@ -277,6 +277,9 @@ class DeviceManagerSUT(DeviceManager):
   # success: <return code>
   # failure: None
   def shell(self, cmd, outputfile, env=None, cwd=None, timeout=None, root=False):
+    if outputfile is None:
+      outputfile = StringIO.StringIO()
+
     cmdline = self._escapedCommandLine(cmd)
     if env:
       cmdline = '%s %s' % (self.formatEnvString(env), cmdline)
