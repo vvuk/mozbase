@@ -530,6 +530,10 @@ class DeviceManager:
     """ Utility function to return escaped and quoted version of command line """
     quotedCmd = []
 
+    if type(cmd) is str:
+      print "Command must be an array of command arguments, not a string!"
+      raise
+
     for arg in cmd:
       arg.replace('&', '\&')
 
