@@ -70,18 +70,18 @@ class DeviceManagerADB(DeviceManager):
     try:
       self.verifyRoot()
     except DMError:
-      try:
-        if not self.skipRoot:
+      if not self.skipRoot:
+        try:
           self.checkCmd(["root"])
-        # The root command does not fail even if ADB cannot get
-        # root rights (e.g. due to production builds), so we have
-        # to check again ourselves that we have root now.
-        self.verifyRoot()
-      except DMError:
-        if useRunAsTmp:
-          print "restarting as root failed, but run-as available"
-        else:
-          print "restarting as root failed"
+          # The root command does not fail even if ADB cannot get
+          # root rights (e.g. due to production builds), so we have
+          # to check again ourselves that we have root now.
+          self.verifyRoot()
+        except DMError:
+          if useRunAsTmp:
+            print "restarting as root failed, but run-as available"
+          else:
+            print "restarting as root failed"
     self.useRunAs = useRunAsTmp
 
     # can we use zip to speed up some file operations? (currently not
@@ -842,6 +842,8 @@ class DeviceManagerADB(DeviceManager):
     response = response.rstrip()
     response = response.split(' ')
     if (response[0].find('uid=0') < 0 or response[1].find('gid=0') < 0):
+      if self.skipRoot:
+        return
       print "NOT running as root ", response[0].find('uid=0')
       raise DMError("not running as root")
 
