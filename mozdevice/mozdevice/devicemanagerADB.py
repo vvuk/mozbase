@@ -13,7 +13,8 @@ import StringIO
 class DeviceManagerADB(DeviceManager):
 
   def __init__(self, host=None, port=20701, retrylimit=5, packageName='fennec',
-               adbPath='adb', deviceSerial=None, deviceRoot=None, skipRoot=False):
+               adbPath='adb', deviceSerial=None, deviceRoot=None, skipRoot=False,
+               **kwargs):
     self.host = host
     self.port = port
     self.retrylimit = retrylimit

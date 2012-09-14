@@ -45,7 +45,7 @@ class DeviceManagerSUT(DeviceManager):
   # The error would be set where appropriate--so sendCMD() could set socket errors,
   # pushFile() and other file-related commands could set filesystem errors, etc.
 
-  def __init__(self, host, port = 20701, retrylimit = 5, deviceRoot = None):
+  def __init__(self, host, port = 20701, retrylimit = 5, deviceRoot = None, **kwargs):
     self.host = host
     self.port = port
     self.retrylimit = retrylimit
