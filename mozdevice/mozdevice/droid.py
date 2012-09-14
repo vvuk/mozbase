@@ -3,6 +3,7 @@
 # You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import StringIO
+import threading
 
 from Zeroconf import Zeroconf, ServiceBrowser
 from devicemanager import ZeroconfListener, NetworkTools
