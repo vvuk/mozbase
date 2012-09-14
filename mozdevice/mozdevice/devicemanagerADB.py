@@ -13,7 +13,7 @@ import StringIO
 class DeviceManagerADB(DeviceManager):
 
   def __init__(self, host=None, port=20701, retrylimit=5, packageName='fennec',
-               adbPath='adb', deviceSerial=None, deviceRoot=None):
+               adbPath='adb', deviceSerial=None, deviceRoot=None, skipRoot=False):
     self.host = host
     self.port = port
     self.retrylimit = retrylimit
@@ -26,6 +26,7 @@ class DeviceManagerADB(DeviceManager):
     self.packageName = None
     self.tempDir = None
     self.deviceRoot = deviceRoot
+    self.skipRoot = skipRoot
 
     # the path to adb, or 'adb' to assume that it's on the PATH
     self.adbPath = adbPath
@@ -68,7 +69,8 @@ class DeviceManagerADB(DeviceManager):
       self.verifyRoot()
     except DMError:
       try:
-        self.checkCmd(["root"])
+        if not self.skipRoot:
+          self.checkCmd(["root"])
         # The root command does not fail even if ADB cannot get
         # root rights (e.g. due to production builds), so we have
         # to check again ourselves that we have root now.
@@ -646,7 +648,8 @@ class DeviceManagerADB(DeviceManager):
         return ret
       except:
         try:
-          self.checkCmd(["root"])
+          if not self.skipRoot:
+            self.checkCmd(["root"])
         except:
           time.sleep(1)
           print "couldn't get root"
