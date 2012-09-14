@@ -655,6 +655,13 @@ class DeviceManagerADB(DeviceManager):
           print "couldn't get root"
     return "Success"
 
+  def installLocalApp(self, localPath, destPath=None):
+    return self.runCmd(["install", "-r", localPath]).stdout.read()
+
+  def uninstallAppAndReboot(self, appName, installPath=None):
+    self.runCmd(["uninstall", appName])
+    self.reboot()
+
   # external function
   # returns:
   #  success: text status from command or callback server

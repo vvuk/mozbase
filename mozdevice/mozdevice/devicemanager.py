@@ -458,7 +458,16 @@ class DeviceManager:
   @abstractmethod
   def installApp(self, appBundlePath, destPath=None):
     """
-    external function
+    Install an application from the bundle at the given device path.
+    returns:
+    success: output from agent for inst command
+    failure: None
+    """
+
+  @abstractmethod
+  def installLocalApp(self, appBundlePath, destPath=None):
+    """
+    Install an application from the bundle at the given local path.
     returns:
     success: output from agent for inst command
     failure: None
@@ -467,7 +476,7 @@ class DeviceManager:
   @abstractmethod
   def uninstallAppAndReboot(self, appName, installPath=None):
     """
-    external function
+    Uninstall the given application, then reboot the device.
     returns:
     success: True
     failure: None
