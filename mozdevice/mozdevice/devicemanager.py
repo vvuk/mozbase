@@ -196,6 +196,16 @@ class DeviceManager:
         """
 
     @abstractmethod
+    def killPackageProcess(self, pkgname):
+        """
+        Kill all processes associated with pkgname.
+
+        returns:
+          success: True
+          failure: False
+        """
+
+    @abstractmethod
     def catFile(self, remoteFile):
         """
         Returns the contents of remoteFile

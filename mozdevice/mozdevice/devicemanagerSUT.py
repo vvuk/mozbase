@@ -527,6 +527,10 @@ class DeviceManagerSUT(DeviceManager):
         if self.processExist(appname):
             self._runCmds([{ 'cmd': 'kill ' + appname }])
 
+    def killPackageProcess(self, pkgname):
+        ok = self._runCmds([{ 'cmd': 'killpackage ' + pkgname }])
+        return ok[0:2] == "OK"
+
     def getTempDir(self):
         """
         Return a temporary directory on the device

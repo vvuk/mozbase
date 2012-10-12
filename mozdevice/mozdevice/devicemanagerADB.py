@@ -404,6 +404,16 @@ class DeviceManagerADB(DeviceManager):
                     raise DMError("Error killing process "
                                   "'%s': %s" % (appname, p.stdout.read()))
 
+    def killPackageProcess(self, pkgname):
+        self._runCmd(["shell", "am", "force-stop", pkgname])
+        time.sleep(1)
+        self._runCmd(["shell", "am", "kill", pkgname])
+        procs = self.getProcessList()
+        for (pid, name, user) in procs:
+            if name == pkgname:
+                return False
+        return True
+
     def catFile(self, remoteFile):
         """
         Returns the contents of remoteFile
@@ -682,7 +692,7 @@ class DeviceManagerADB(DeviceManager):
             ret["process"] = self._runCmd(["shell", "ps"]).stdout.read()
         if (directive == "systime" or directive == "all"):
             ret["systime"] = self._runCmd(["shell", "date"]).stdout.read()
-        print ret
+        #print ret
         return ret
 
     def uninstallApp(self, appName, installPath=None):
